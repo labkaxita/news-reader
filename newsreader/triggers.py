@@ -4,15 +4,14 @@ class Trigger(object):
         raise NotImplemented()
 
 
-class TitleTrigger(Trigger):
-    def __init__(self, title, case_sensitive=False):
-        self.title = title
+class Contains(Trigger):
+    def __init__(self, string, case_sensitive=False):
+        self.string = string
         self.case_sensitive = case_sensitive
 
     def is_activated(self, entry):
-        entry = entry['title']
-        title = self.title
+        string = self.string
         if not self.case_sensitive:
-            title = title.lower()
+            string = string.lower()
             entry = entry.lower()
-        return title in entry 
+        return string in entry
