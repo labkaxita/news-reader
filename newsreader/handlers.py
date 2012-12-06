@@ -2,12 +2,12 @@ from smtplib import SMTP
 from sys import stdout
 
 
-class Action(object):
+class Handler(object):
     def do(self, data):
         raise NotImplemented()
 
 
-class PrintConsoleAction(Action):
+class ConsoleHandler(Handler):
     def format_data(self, data):
         return data['description']
 
@@ -16,7 +16,7 @@ class PrintConsoleAction(Action):
         stdout.write(data)
 
 
-class SendEmailAction(Action):
+class EmailHandler(Handler):
     def __init__(self, server, sender, recipients=[]):
         self.recipiends = recipiends
         self.host, self.port = server
