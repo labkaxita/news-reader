@@ -1,3 +1,4 @@
+import itertools
 
 
 class Processor(object):
@@ -6,13 +7,13 @@ class Processor(object):
         self.triggers = triggers
         self.handlers = handlers
 
-    def get_processes(self):
+    def triggered_data(self):
         for source in self.sources:
             for data in source.read():
                 if any(( trigger.is_activated(data) for trigger in self.triggers )):
-                    for handler in self.handlers:
-                        yield lambda: handler.write(data)
+                    yield data
 
     def process(self):
-        for process in self.get_processes():
-            process()
+        cached_data = itertools.tee(self.triggered_data(), len(self.handlers))
+        for handler, data in zip(self.handlers, cached_data):
+            handler.write(data)

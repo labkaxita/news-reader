@@ -1,6 +1,6 @@
 import feedparser
 
-from newsreader.formatters import Formatter
+from newsreader.formatters import Formatter, FeedFormatter
 
 class Source(object):
     def __init__(self, formatter=None):

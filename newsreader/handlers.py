@@ -1,6 +1,8 @@
 from smtplib import SMTP
 from sys import stdout
 
+from newsreader.formatters import Formatter
+
 
 class Handler(object):
     def __init__(self, formatter=None):
@@ -8,16 +10,22 @@ class Handler(object):
             formatter = Formatter()
         self.formatter = formatter
 
-    def write(self, data):
-        self.handle(self.formatter.format(data))
+    def _write(self, entries):
+        for entry in entries:
+            entry = self.formatter.format(entry)
+            yield entry
 
-    def handle(self, data):
+    def write(self, entries):
+        self.handle(self._write(entries))
+
+    def handle(self, entries):
         raise NotImplemented()
 
 
 class ConsoleHandler(Handler):
-    def handle(self, data):
-        stdout.write(data)
+    def handle(self, entries):
+        for entry in entries:
+            stdout.write(entry)
 
 
 class EmailHandler(Handler):
@@ -26,5 +34,6 @@ class EmailHandler(Handler):
         self.host, self.port = server
         self.smtp = SMTP(self.host, self.port)
 
-    def handle(self, data):
-        self.smtp.sendmail(sender, recipients, data)
+    def handle(self, entries):
+        for entry in entries:
+            self.smtp.sendmail(sender, recipients, entry)
