@@ -1,10 +1,10 @@
 
 
 class Formatter(object):
-    def format(self, data):
-        return data
+    def format(self, entry):
+        return entry
 
 
 class FeedFormatter(Formatter):
-    def format(self, data):
-        return data
+    def format(self, entry):
+        return entry

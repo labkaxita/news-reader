@@ -7,13 +7,16 @@ class Processor(object):
         self.triggers = triggers
         self.handlers = handlers
 
-    def triggered_data(self):
+    def triggered_entries(self):
         for source in self.sources:
-            for data in source.read():
-                if any(( trigger.is_activated(data) for trigger in self.triggers )):
-                    yield data
+            for entry in source.read():
+                if any(( trigger.is_activated(entry) for trigger in self.triggers )):
+                    yield entry
 
     def process(self):
-        cached_data = itertools.tee(self.triggered_data(), len(self.handlers))
-        for handler, data in zip(self.handlers, cached_data):
-            handler.write(data)
+        cached_entries = itertools.tee(
+                self.triggered_entries(),
+                len(self.handlers),
+                )
+        for handler, entries in zip(self.handlers, cached_entries):
+            handler.write(entries)

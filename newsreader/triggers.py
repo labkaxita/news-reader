@@ -1,6 +1,6 @@
 
 class Trigger(object):
-    def is_activated(self, data):
+    def is_activated(self, entry):
         raise NotImplemented()
 
 
@@ -9,10 +9,10 @@ class TitleTrigger(Trigger):
         self.title = title
         self.case_sensitive = case_sensitive
 
-    def is_activated(self, data):
-        data = data['title']
+    def is_activated(self, entry):
+        entry = entry['title']
         title = self.title
         if not self.case_sensitive:
             title = title.lower()
-            data = data.lower()
-        return title in data
+            entry = entry.lower()
+        return title in entry 
