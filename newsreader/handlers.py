@@ -5,14 +5,15 @@ from newsreader.formatters import Formatter
 
 
 class Handler(object):
-    def __init__(self, formatter=None):
-        if formatter is None:
-            formatter = Formatter()
-        self.formatter = formatter
+    def __init__(self, formatters=[]):
+        if not formatters:
+            formatters = [Formatter()]
+        self.formatters = formatters
 
     def _write(self, entries):
         for entry in entries:
-            entry = self.formatter.format(entry)
+            for formatter in self.formatters:
+                entry = formatter.format(entry)
             yield entry
 
     def write(self, entries):
