@@ -1,3 +1,5 @@
+import dateutil
+
 
 class Trigger(object):
     def is_activated(self, entry):
@@ -33,3 +35,15 @@ class Contains(Trigger):
             string = string.lower()
             entry = entry.lower()
         return string in entry
+    
+
+class TimeDelta(Trigger):
+    def __init__(self, past=None, future=None):
+        self.past = past
+        self.future = future
+
+    def is_activated(self, entry):
+        dt = dateutil.parser.parse(entry, fuzzy=True)
+        past = dt > self.past if self.past is not None else True
+        future = dt < self.future if self.future is not None else True
+        return past and future
