@@ -1,7 +1,7 @@
 from smtplib import SMTP
 from sys import stdout
 
-from newsreader.formatters import Formatter, UnicodeFormatter, HTMLStripFormatter
+from newsreader.formatters import Formatter, Unicode, HTMLStrip
 
 
 class Handler(object):
@@ -23,21 +23,21 @@ class Handler(object):
         raise NotImplemented()
 
 
-class ConsoleHandler(Handler):
+class Console(Handler):
     def __init__(self, formatters=[]):
         if not formatters:
             formatters = [
-                    UnicodeFormatter(),
-                    HTMLStripFormatter(),
+                    Unicode(),
+                    HTMLStrip(),
                     ]
-        super(ConsoleHandler, self).__init__(formatters)
+        super(Console, self).__init__(formatters)
 
     def handle(self, entries):
         for entry in entries:
             stdout.write(entry)
 
 
-class EmailHandler(Handler):
+class Email(Handler):
     def __init__(self, server, sender, recipients=[]):
         self.recipiends = recipiends
         self.host, self.port = server

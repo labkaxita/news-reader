@@ -1,6 +1,7 @@
 import feedparser
 
-from newsreader.formatters import Formatter, FeedFormatter
+from newsreader.formatters import Formatter
+from newsreader.formatters import Feed as FeedF
 
 class Source(object):
     def __init__(self, formatters=[]):
@@ -22,11 +23,11 @@ class FeedParserError(Exception):
     pass
 
 
-class FeedSource(Source):
+class Feed(Source):
     def __init__(self, url, formatters=[]):
         if not formatters:
-            formatters = [FeedFormatter()]
-        super(FeedSource, self).__init__(formatters)
+            formatters = [FeedF()]
+        super(Feed, self).__init__(formatters)
         self.url = url
 
     def entries(self):

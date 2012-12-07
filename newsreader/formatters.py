@@ -6,22 +6,22 @@ class Formatter(object):
         return entry
 
 
-class UnicodeFormatter(Formatter):
+class Unicode(Formatter):
     def format(self, entry):
         return unicode(entry)
 
-class FeedFormatter(Formatter):
+class Feed(Formatter):
     def format(self, entry):
         return entry
 
 
-class HTMLStripFormatter(Formatter):
+class HTMLStrip(Formatter):
     tags = re.compile(r'<[^>]*?>')
     def format(self, entry):
         return re.sub(self.tags, '', entry)
 
 
-class FeedTitleDescriptionFormatter(Formatter):
+class FeedTitleDescription(Formatter):
     def format(self, entry):
         return u'{title}\n\n{description}'.format(
                 title=entry['title'],
