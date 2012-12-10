@@ -19,6 +19,7 @@ setup(name='newsreader',
       zip_safe=False,
       install_requires=[
           'feedparser',
+          'python-dateutil',
       ],
       entry_points="""
       # -*- Entry points: -*-
