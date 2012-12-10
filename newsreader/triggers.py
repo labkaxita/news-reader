@@ -6,7 +6,7 @@ class Trigger(object):
         raise NotImplemented()
 
 
-class And(objects):
+class And(Trigger):
     def __init__(self, subtriggers=[]):
         self.subtriggers = subtriggers
 
@@ -15,7 +15,7 @@ class And(objects):
                 self.subtriggers ))
 
 
-class Or(objects):
+class Or(Trigger):
     def __init__(self, subtriggers=[]):
         self.subtriggers = subtriggers
 
