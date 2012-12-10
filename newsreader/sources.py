@@ -1,19 +1,17 @@
 import feedparser
 
-from newsreader.formatters import Formatter
-from newsreader.formatters import Feed as FeedF
+from newsreader.parsers import FeedParser
+
 
 class Source(object):
-    def __init__(self, formatters=[]):
-        if not formatters:
-            formatters = [Formatter()]
-        self.formatters = formatters
+    def __init__(self, parser=None):
+        if parser is None:
+            parser = Parser()
+        self.parser = parser
 
     def read(self):
         for entry in self.entries():
-            for formatter in self.formatters:
-                entry = formatter.format(entry)
-            yield entry
+            yield self.parser.parse(entry)
 
     def entries(self):
         raise NotImplemented()
@@ -24,10 +22,10 @@ class FeedParserError(Exception):
 
 
 class Feed(Source):
-    def __init__(self, url, formatters=[]):
-        if not formatters:
-            formatters = [FeedF()]
-        super(Feed, self).__init__(formatters)
+    def __init__(self, url, parser=None):
+        if parser is None:
+            parser = FeedParser
+        super(Feed, self).__init__(parser)
         self.url = url
 
     def entries(self):
