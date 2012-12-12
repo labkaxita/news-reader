@@ -40,10 +40,26 @@ class HandlerProcessor(dict):
 
 
 class Processor(object):
-    def __init__(self, source_processor, trigger_processor, handler_processor):
-        self.source_processor = source_processor
-        self.trigger_processor = trigger_processor
-        self.handler_processor = handler_processor
+    @property
+    def source_processor(self):
+        try:
+            return SourceProcessor(self.sources)
+        except AttributeError:
+            raise AttributeError('either define sources or source_processor')
+
+    @property
+    def trigger_processor(self):
+        try:
+            return TriggerProcessor(self.triggers)
+        except AttributeError:
+            raise AttributeError('either define triggers or trigger_processor')
+
+    @property
+    def handler_processor(self):
+        try:
+            return HandlerProcessor(self.handlers)
+        except AttributeError:
+            raise AttributeError('either define handlers or handler_processor')
 
     def process(self):
         entries = self.source_processor.process()
