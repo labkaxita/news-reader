@@ -1,9 +1,21 @@
 import feedparser
+import random
 
 
 class Source(object):
     def read(self):
         raise StopIteration()
+
+
+class RandomInt(Source):
+    def __init__(self, quantity, minimum, maximum):
+        self.quantity = quantity
+        self.minimum = minimum
+        self.maximum = maximum
+
+    def read(self):
+        for i in range(self.quantity):
+            yield random.randint(self.minimum, self.maximum)
 
 
 class FeedParserError(Exception):
