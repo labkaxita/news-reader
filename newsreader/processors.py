@@ -47,6 +47,10 @@ class Processor(object):
 
     def process(self):
         entries = self.source_processor.process()
-        entries = self.trigger_processor.process()
-        results = self.handler_processor.process()
+        entries = self.trigger_processor.process(entries)
+        results = self.handler_processor.process(entries)
+        return results
+
+    def main(self):
+        results = list(self.process())
         return results

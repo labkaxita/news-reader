@@ -5,7 +5,9 @@ class Formatter(object):
         return entries
 
 
-class FeedMailFormatter(Formatter):
+class FeedDigest(Formatter):
     def format(self, entries):
+        mail = ''
         for entry in entries:
-            yield str(entry)
+            mail += str(entry)
+        yield mail

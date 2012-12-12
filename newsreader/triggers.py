@@ -3,7 +3,7 @@ import dateutil
 
 class Trigger(object):
     def is_activated(self, entry):
-        return NotImplemented()
+        raise NotImplemented
 
 
 class And(object):
@@ -30,9 +30,9 @@ class Contains(Trigger):
         self.match = match
         self.case_sensitive = case_sensitive
 
-    def _is_activated(self, entry):
+    def is_activated(self, entry):
         match = self.match
-        text = self.entry[key]
+        text = entry[self.key]
         if not self.case_sensitive:
             match = match.lower()
             text = text.lower()
@@ -45,7 +45,7 @@ class TimeDelta(Trigger):
         self.past = past
         self.future = future
 
-    def _is_activated(self, entry):
+    def is_activated(self, entry):
         text = entry[key]
         dt = dateutil.parser.parse(text, fuzzy=True)
         past = dt > self.past if self.past is not None else True

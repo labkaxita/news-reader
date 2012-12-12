@@ -1,15 +1,13 @@
 from smtplib import SMTP
 from sys import stdout
 
-from newsreader.formatters import Formatter, Unicode, HTMLStrip
-
 
 class Handler(object):
     def write(self, entries):
         self.handle(entries)
 
     def handle(self, entries):
-        raise NotImplemented()
+        raise NotImplemented
 
 
 class Console(Handler):

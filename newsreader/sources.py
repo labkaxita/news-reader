@@ -1,14 +1,12 @@
 import feedparser
 
-from newsreader.parsers import FeedParser
-
 
 class Source(object):
     def read(self):
         return self.entries()
 
     def entries(self):
-        raise NotImplemented()
+        raise NotImplemented
 
 
 class FeedParserError(Exception):

@@ -8,4 +8,4 @@ def register(processor):
 def main():
     while True:
         for processor in registry:
-            processor.process()
+            processor.main()
