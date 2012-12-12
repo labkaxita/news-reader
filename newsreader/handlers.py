@@ -7,7 +7,7 @@ class Handler(object):
         self.handle(entries)
 
     def handle(self, entries):
-        raise NotImplemented
+        pass
 
 
 class Console(Handler):
