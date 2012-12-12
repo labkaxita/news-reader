@@ -3,7 +3,7 @@ import feedparser
 
 class Source(object):
     def read(self):
-        raise NotImplemented
+        raise StopIteration()
 
 
 class FeedParserError(Exception):
