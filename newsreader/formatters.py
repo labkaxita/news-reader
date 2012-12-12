@@ -1,16 +1,11 @@
 import re
 
-
 class Formatter(object):
-    def format(self, entry):
-        return entry
+    def format(self, entries):
+        return entries
 
 
-class Unicode(Formatter):
-    def format(self, entry):
-        return unicode(entry)
-
-class HTMLStrip(Formatter):
-    tags = re.compile(r'<[^>]*?>')
-    def format(self, entry):
-        return re.sub(self.tags, '', entry)
+class FeedMailFormatter(Formatter):
+    def format(self, entries):
+        for entry in entries:
+            yield str(entry)
