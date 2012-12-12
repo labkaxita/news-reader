@@ -8,7 +8,9 @@ class SourceProcessor(object):
     def process(self):
         for source, parser in self.sources.items():
             entries = source.read()
-            for entry in parser.parse(entries):
+            if parser is not None:
+                entries = parser.parse(entries)
+            for entry in entries:
                 yield entry
 
 
@@ -37,7 +39,8 @@ class HandlerProcessor(dict):
                 cached_entries)
 
         for handler, formatter, entries in joins:
-            entries = formatter.format(entries)
+            if formatter is not None:
+                entries = formatter.format(entries)
             yield handler.write(entries)
                 
 
