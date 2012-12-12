@@ -3,9 +3,6 @@ import feedparser
 
 class Source(object):
     def read(self):
-        return self.entries()
-
-    def entries(self):
         raise NotImplemented
 
 
@@ -17,7 +14,7 @@ class Feed(Source):
     def __init__(self, url):
         self.url = url
 
-    def entries(self):
+    def read(self):
         feed = feedparser.parse(self.url)
         if feed.status != 200:
             raise FeedParserError('Status code: {}'.format(feed.status))
