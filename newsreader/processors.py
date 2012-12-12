@@ -17,6 +17,9 @@ class TriggerProcessor(object):
         self.triggers = triggers
 
     def process(self, entries):
+        if len(self.triggers) == 0:
+            return entries
+
         for entry in entries:
             if any(( trigger.is_activated(entry) for trigger in self.triggers )):
                 yield entry
