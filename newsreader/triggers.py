@@ -3,7 +3,7 @@ import dateutil
 
 class Trigger(object):
     def is_activated(self, entry):
-        raise NotImplemented
+        return True
 
 
 class And(object):
