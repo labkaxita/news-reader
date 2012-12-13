@@ -5,20 +5,20 @@ news-reader
 Overall structure
 -----------------
 
-    sources:        web              feed           Get news form many sources
+    sources:        web              feed           Get news from many sources
                      |                 | 
                      +--------+--------+
                               |
                      +--------+--------+
                      |                 |
-    triggers:       date           contains         Filter it on certain stuff
+    triggers:       date           contains         Filter it depending on certain conditions
                      |                 |   
                      +-------any-------+
                               | 
                         web   |  feed
                      +-source-+-source-+
                      |                 |
-    formatters:   web-digest      feed-digest       Format entries depending on their source
+    formatters:   web-digest      feed-digest       Format entries (depending on their source)
                      |                 |
                      +--------+--------+
                               |         
