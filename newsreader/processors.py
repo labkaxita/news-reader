@@ -69,5 +69,4 @@ class Processor(object):
         return results
 
     def main(self):
-        results = list(self.process())
-        return results
+        return { handler: list(results) for handler, results in self.process() }
