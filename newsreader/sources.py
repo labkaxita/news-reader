@@ -1,6 +1,8 @@
 import feedparser
 import random
 
+from newsreader.entry import Entry
+
 
 class Source(object):
     def read(self):
@@ -15,7 +17,7 @@ class RandomInt(Source):
 
     def read(self):
         for i in range(self.quantity):
-            yield random.randint(self.minimum, self.maximum)
+            yield Entry(int=random.randint(self.minimum, self.maximum))
 
 
 class FeedParserError(Exception):
@@ -32,4 +34,4 @@ class Feed(Source):
             raise FeedParserError('Status code: {}'.format(feed.status))
         else:
             for entry in feed['entries']:
-                yield entry
+                yield Entry(entry)

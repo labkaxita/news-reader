@@ -6,11 +6,10 @@ class SourceProcessor(object):
         self.sources = sources
 
     def process(self):
-        for source, parser in self.sources.items():
+        for source, formatter in self.sources.items():
             entries = source.read()
-            if parser is not None:
-                entries = parser.parse(entries)
             for entry in entries:
+                entry.formatter = formatter
                 yield entry
 
 
@@ -32,20 +31,15 @@ class HandlerProcessor(dict):
 
     def process(self, entries):
         cached_entries = itertools.tee(entries, len(self.handlers))
-        joins = zip(
-                self.handlers.keys(), 
-                self.handlers.values(), 
-                cached_entries)
+        joined = zip(self.handlers, cached_entries)
 
-        for handler, formatter, entries in joins:
-            if formatter is not None:
-                entries = formatter.format(entries)
+        for handler, entries in joined:
+            entries = ( entry.format() for entry in entries )
             yield (handler, handler.write(entries))
                 
 
-
 class Processor(object):
-    def __init__(self, sources={}, triggers=[], handlers={}):
+    def __init__(self, sources={}, triggers=[], handlers=[]):
         self.sources = sources
         self.triggers = triggers
         self.handlers = handlers
