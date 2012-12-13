@@ -3,6 +3,12 @@ import random
 
 
 class Trigger(object):
+    def __and__(self, other):
+        return And(subtriggers=[self, other])
+
+    def __or__(self, other):
+        return Or(subtriggers=[self, other])
+
     def is_activated(self, entry):
         return True
 
