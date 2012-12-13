@@ -1,5 +1,7 @@
 import itertools
 
+from newsreader.formatters import Formatter
+
 
 class SourceProcessor(object):
     def __init__(self, sources):
@@ -8,6 +10,8 @@ class SourceProcessor(object):
     def process(self):
         for source, formatter in self.sources.items():
             entries = source.read()
+            if formatter is None:
+                formatter = Formatter()
             for entry in entries:
                 entry.formatter = formatter
                 yield entry
