@@ -1,4 +1,5 @@
 import dateutil
+import random
 
 
 class Trigger(object):
@@ -6,7 +7,7 @@ class Trigger(object):
         return True
 
 
-class And(object):
+class And(Trigger):
     def __init__(self, subtriggers=[]):
         self.subtriggers = subtriggers
 
@@ -15,13 +16,21 @@ class And(object):
                 self.subtriggers ))
 
 
-class Or(object):
+class Or(Trigger):
     def __init__(self, subtriggers=[]):
         self.subtriggers = subtriggers
 
     def is_activated(self, entry):
         return any(( trigger.is_activated(entry) for trigger in \
                 self.subtriggers ))
+
+
+class Random(Trigger):
+    def __init__(self, probability=.5):
+        self.probability = probability
+
+    def is_activated(self, entry):
+        return random.random() < self.probability
 
 
 class Contains(Trigger):
