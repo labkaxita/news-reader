@@ -2,20 +2,26 @@ news-reader
 ===========
 
 
-Processors
-----------
+Overall structure
+-----------------
 
-Processors are the binding between sources, triggers and handlers. They can hold 
-several of them. For every source, data is gotten, and every peace of data is
-passed to the triggers. If one of them is activated, the peace of data is passed
-to all the defined handlers, so that they be executated with the given data.
-
-                                   PROCESSOR
-                  +------------------------------------------+
-                  |                                          |
-                  | sources ------> triggers -----> handlers |
-                  |                                          |
-                  +------------------------------------------+
-
-Several processors can be instantiated, every one of them with their associated
-sources, triggers and actions.
+sources:        web              feed           Get news form many sources
+                 |                 | 
+                 +--------+--------+
+                          |
+                 +--------+--------+
+                 |                 |
+triggers:       date           contains         Filter it on certain stuff
+                 |                 |   
+                 +-------any-------+
+                          | 
+                    web   |  feed
+                 +-source-+-source-+
+                 |                 |
+formatters:   web-digest      feed-digest       Format entries depending on their source
+                 |                 |
+                 +--------+--------+
+                          |         
+                 +--------+--------+
+                 |                 |
+handlers:       mail            console         Handle the formatted entries
