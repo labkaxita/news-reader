@@ -12,7 +12,8 @@ def register(processor):
 def main():
     while True:
         for processor in registry:
-            processor.main()
+            results = processor.main()
+            yield results
 
 
 def async_main():
