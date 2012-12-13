@@ -7,7 +7,7 @@ class Handler(object):
         self.handle(entries)
 
     def handle(self, entries):
-        pass
+        return entries
 
 
 class Console(Handler):
