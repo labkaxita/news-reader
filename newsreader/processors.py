@@ -40,7 +40,7 @@ class HandlerProcessor(dict):
         for handler, formatter, entries in joins:
             if formatter is not None:
                 entries = formatter.format(entries)
-            yield handler.write(entries)
+            yield (handler, handler.write(entries))
                 
 
 
